@@ -26,13 +26,13 @@ module WgTgBot
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    Rails.application.config.after_initialize do
-      Thread.new do
-        puts 'Запускаем Telegram бота...'
-        TelegramBot.listen
-      rescue StandardError => e
-        Rails.logger.error("Ошибка в Telegram боте: #{e.message}\n#{e.backtrace.join("\n")}")
-      end
-    end
+    # Rails.application.config.after_initialize do
+    #   Thread.new do
+    #     puts 'Запускаем Telegram бота...'
+    #     TelegramBot.listen
+    #   rescue StandardError => e
+    #     Rails.logger.error("Ошибка в Telegram боте: #{e.message}\n#{e.backtrace.join("\n")}")
+    #   end
+    # end
   end
 end
