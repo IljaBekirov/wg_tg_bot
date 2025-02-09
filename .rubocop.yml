@@ -4,5 +4,11 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
