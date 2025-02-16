@@ -1,5 +1,6 @@
 if Rails.env.production? || Rails.env.development?
   Thread.new do
+    require 'telegram/bot'
     puts 'Запуск телеграм бота'
     bot = TelegramBot.new
     bot.start
