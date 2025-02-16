@@ -77,9 +77,6 @@ env:
     DB_HOST: wg_tg_bot-db
   secret:
     - RAILS_MASTER_KEY
-    - SMTP_PASSWORD
-    - SMTP_SERVER
-    - SMTP_LOGIN
     - DB_HOST
     - POSTGRES_USER
     - POSTGRES_PASSWORD
