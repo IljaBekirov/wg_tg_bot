@@ -28,9 +28,9 @@ class MessageHandler
   end
 
   def send_tariffs(user)
-    buttons = Tariff.all.map do |tariff|
+    buttons = Tariff.all.order(:duration).map do |tariff|
       Telegram::Bot::Types::InlineKeyboardButton.new(
-        text: "#{tariff.name} - #{tariff.price} руб.",
+        text: build_tariff_message_text(tariff),
         callback_data: "tariff_#{tariff.id}"
       )
     end
@@ -56,5 +56,9 @@ class MessageHandler
 
       Выберите период, на который хотите приобрести подписку:
     MESSAGE
+  end
+
+  def build_tariff_message_text(tariff)
+    "#{tariff.duration} мес - #{tariff.price} руб. #{tariff.description}"
   end
 end

@@ -96,7 +96,7 @@ class CallbackQueryHandler
 
   def build_message_text(tariff)
     <<~MESSAGE
-      Оплата подписки на "#{tariff.name} - #{tariff.price} руб."
+      Оплата подписки на "#{tariff.duration} мес - #{tariff.price} руб."
 
       Для оплаты откроется браузер.
       Вы сможете оплатить подписку с помощью банковских карт, СБП и SberPay.

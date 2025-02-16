@@ -59,11 +59,11 @@ class YumoneyPayment
   end
 
   def shop_id
-    ENV['YUMONEY_SHOP_ID']
+    Rails.application.config.yumoney[:shop_id]
   end
 
   def secret_key
-    ENV['YUMONEY_SECRET_KEY']
+    Rails.application.config.yumoney[:secret_key]
   end
 
   def handle_response(response_body)

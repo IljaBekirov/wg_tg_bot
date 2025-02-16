@@ -1,9 +1,9 @@
 class CreateTariffs < ActiveRecord::Migration[7.1]
   def change
     create_table :tariffs do |t|
-      t.string :name
+      t.integer :duration
       t.decimal :price
-      t.string :file_path
+      t.string :description
 
       t.timestamps
     end

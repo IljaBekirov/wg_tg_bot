@@ -1,0 +1,2 @@
+CREATE DATABASE wg_tg_bot_production;
+CREATE DATABASE wg_tg_bot_production_cable;

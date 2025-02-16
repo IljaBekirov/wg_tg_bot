@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   post 'webhooks/yumoney', to: 'webhooks#yumoney'
+
+  resources :tariff_files, only: %i[new create]
+  resources :tariffs, only: %i[index new create]
 end

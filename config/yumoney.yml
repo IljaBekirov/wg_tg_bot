@@ -1,0 +1,7 @@
+development:
+  shop_id: <%= ENV['YUMONEY_SHOP_ID_DEV'] %>
+  secret_key: <%= ENV['YUMONEY_SECRET_KEY_DEV'] %>
+
+production:
+  shop_id: <%= ENV['YUMONEY_SHOP_ID_PROD'] %>
+  secret_key: <%= ENV['YUMONEY_SECRET_KEY_PROD'] %>
