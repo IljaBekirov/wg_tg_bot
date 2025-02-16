@@ -4,6 +4,8 @@ require 'telegram/bot'
 
 class TelegramBot
   def initialize
+    puts 'Инициализация бота'
+    puts "Токен: #{ENV['TELEGRAM_BOT_TOKEN']}"
     @bot = Telegram::Bot::Client.new(ENV['TELEGRAM_BOT_TOKEN'])
   end
 
