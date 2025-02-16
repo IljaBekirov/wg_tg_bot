@@ -22,23 +22,23 @@ servers:
   #     - 192.168.0.1
   #   cmd: bin/jobs
 
-traefik:
-  options:
-    publish:
-      - "443:443"
-    volume:
-      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
-    network: "private"
-  args:
-    entryPoints.web.address: ":80"
-    entryPoints.websecure.address: ":443"
-    entryPoints.web.http.redirections.entryPoint.to: websecure
-    entryPoints.web.http.redirections.entryPoint.scheme: https
-    entryPoints.web.http.redirections.entrypoint.permanent: true
-    certificatesResolvers.letsencrypt.acme.email: "ilja.bekirov@gmail.com"
-    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
-    certificatesResolvers.letsencrypt.acme.httpchallenge: true
-    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
+#traefik:
+#  options:
+#    publish:
+#      - "443:443"
+#    volume:
+#      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
+#    network: "private"
+#  args:
+#    entryPoints.web.address: ":80"
+#    entryPoints.websecure.address: ":443"
+#    entryPoints.web.http.redirections.entryPoint.to: websecure
+#    entryPoints.web.http.redirections.entryPoint.scheme: https
+#    entryPoints.web.http.redirections.entrypoint.permanent: true
+#    certificatesResolvers.letsencrypt.acme.email: "ilja.bekirov@gmail.com"
+#    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+#    certificatesResolvers.letsencrypt.acme.httpchallenge: true
+#    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
 # Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
 # Remove this section when using multiple web servers and ensure you terminate SSL at your load balancer.
 #
