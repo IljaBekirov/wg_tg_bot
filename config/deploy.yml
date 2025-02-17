@@ -75,7 +75,6 @@ env:
     RAILS_LOG_TO_STDOUT: true
     RAILS_SERVE_STATIC_FILES: true
     DB_HOST: wg_tg_bot-db
-    SECRET_KEY_BASE:
   secret:
     - RAILS_MASTER_KEY
     - DB_HOST
