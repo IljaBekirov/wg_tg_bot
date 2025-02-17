@@ -9,12 +9,12 @@ servers:
   web:
     hosts:
       - 89.22.224.1
-    labels:
-      traefik.http.routers.wg_tg_bot.rule: Host(`wgbot.ru`)
-      traefik.http.routers.wg_tg_bot.entrypoints: websecure
-      traefik.http.routers.wg_tg_bot_secure.rule: Host(`wgbot.ru`)
-      traefik.http.routers.wg_tg_bot_secure.tls: true
-      traefik.http.routers.wg_tg_bot_secure.tls.certresolver: letsencrypt
+#    labels:
+#      traefik.http.routers.wg_tg_bot.rule: Host(`wgbot.ru`)
+#      traefik.http.routers.wg_tg_bot.entrypoints: websecure
+#      traefik.http.routers.wg_tg_bot_secure.rule: Host(`wgbot.ru`)
+#      traefik.http.routers.wg_tg_bot_secure.tls: true
+#      traefik.http.routers.wg_tg_bot_secure.tls.certresolver: letsencrypt
 #    options:
 #      network: "private"
   # job:
@@ -69,6 +69,8 @@ builder:
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 #
 env:
+  file:
+    - /root/.env.production
   clear:
     RAILS_ENV: production
     RACK_ENV: production
