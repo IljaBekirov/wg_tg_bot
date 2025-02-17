@@ -69,14 +69,13 @@ builder:
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 #
 env:
-  file:
-    - /root/.env.production
   clear:
     RAILS_ENV: production
     RACK_ENV: production
     RAILS_LOG_TO_STDOUT: true
     RAILS_SERVE_STATIC_FILES: true
     DB_HOST: wg_tg_bot-db
+    SECRET_KEY_BASE:
   secret:
     - RAILS_MASTER_KEY
     - DB_HOST
