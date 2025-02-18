@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:17.0
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: wg_tg_bot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: wg_tg_bot_production
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7.4
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  bot:
+    image: ibekirov/wg_tg_bot:latest
+    container_name: wg_tg_bot
+    restart: always
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/dbname
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
