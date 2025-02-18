@@ -27,6 +27,8 @@ services:
     environment:
       DATABASE_URL: postgres://user:password@db:5432/dbname
       REDIS_URL: redis://redis:6379/0
+    env_file:
+      - ./.env.production
     depends_on:
       - db
       - redis
