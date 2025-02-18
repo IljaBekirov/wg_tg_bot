@@ -46,7 +46,6 @@ RUN chmod +x bin/thrust bin/docker-entrypoint
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-
 # Final stage for app image
 FROM base
 
@@ -61,10 +60,9 @@ RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp bin/thrust bin/docker-entrypoint
 
-RUN #groupadd --system --gid 1000 rails && \
+#RUN groupadd --system --gid 1000 rails && \
 #    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
 #    chown -R rails:rails /rails/db /rails/log /rails/storage /rails/tmp /rails/bin/thrust /rails/bin/docker-entrypoint
-
 
 USER 1000:1000
 
