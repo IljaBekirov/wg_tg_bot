@@ -41,6 +41,8 @@ RUN bundle install && \
 # Copy application code
 COPY . .
 
+RUN chmod +x bin/thrust bin/docker-entrypoint
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
@@ -52,10 +54,18 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
+RUN chmod +x /rails/bin/thrust /rails/bin/docker-entrypoint
+
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails db log storage tmp bin/thrust bin/docker-entrypoint
+
+RUN #groupadd --system --gid 1000 rails && \
+#    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+#    chown -R rails:rails /rails/db /rails/log /rails/storage /rails/tmp /rails/bin/thrust /rails/bin/docker-entrypoint
+
+
 USER 1000:1000
 
 # Entrypoint prepares the database.
