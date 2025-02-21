@@ -2,46 +2,62 @@ version: '3.8'
 services:
   db:
     image: postgres:17.0
-#    volumes:
-#      - postgresql_volume:/var/lib/postgresql/data
     container_name: wg_tg_bot-db
     restart: always
     env_file:
-#      - ./.env.production
       - ./.env
-#    environment:
-#      POSTGRES_USER: wg_tg_bot
-#      POSTGRES_PASSWORD: dbgoodpassword
-#      POSTGRES_DB: wg_tg_bot_production
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - pgdata:/var/lib/postgresql/data  # Для сохранения данных базы между перезапусками
 
   redis:
     image: redis:7.4
-#    container_name: redis
     restart: always
     ports:
       - "6379:6379"
 
   bot:
     image: ibekirov/wg_tg_bot:v1.4
-#    container_name: wg_tg_bot
-    ports:
-      - "443:443"
     restart: always
     platform: linux/amd64
-#    volumes:
-#      - ".:/app"
-#    volumes:
-#      - .:/app:cached
-#      - bundle_volume:/bundle
+    expose:
+      - "443"  # Поменяли ports на expose, так как Nginx будет проксировать
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       REDIS_URL: redis://redis:6379/0
+      HOST: "wgbot.ru"  # Указываем домен для Rails
+#      RAILS_MASTER_KEY: "<your_master_key>"  # Укажи значение из config/master.key
     env_file:
       - ./.env.production
     depends_on:
       - db
       - redis
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"   # Для Certbot и редиректа HTTP -> HTTPS
+      - "443:443" # Для HTTPS
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf  # Конфигурация Nginx
+      - certbot-data:/etc/letsencrypt  # Сертификаты Let's Encrypt
+      - ./certbot/www:/var/www/certbot  # Для проверки Certbot
+    depends_on:
+      - bot
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-data:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ilja.bekirov@gmail.com --agree-tos --no-eff-email -d wgbot.ru -d www.wgbot.ru
+    depends_on:
+      - nginx
+
+volumes:
+  pgdata:  # Том для данных PostgreSQL
+  certbot-data:  # Том для сертификатов Let's Encrypt
