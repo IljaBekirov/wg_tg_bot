@@ -2,30 +2,43 @@ version: '3.8'
 services:
   db:
     image: postgres:17.0
-    container_name: postgres_db
+#    volumes:
+#      - postgresql_volume:/var/lib/postgresql/data
+    container_name: wg_tg_bot-db
     restart: always
     env_file:
-      - ./.env.production
+#      - ./.env.production
+      - ./.env
 #    environment:
 #      POSTGRES_USER: wg_tg_bot
 #      POSTGRES_PASSWORD: dbgoodpassword
 #      POSTGRES_DB: wg_tg_bot_production
     ports:
       - "5432:5432"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
 
   redis:
     image: redis:7.4
-    container_name: redis
+#    container_name: redis
     restart: always
     ports:
       - "6379:6379"
 
   bot:
-    image: ibekirov/wg_tg_bot:latest
-    container_name: wg_tg_bot
+    image: ibekirov/wg_tg_bot:v1.4
+#    container_name: wg_tg_bot
+    ports:
+      - "443:443"
     restart: always
+    platform: linux/amd64
+#    volumes:
+#      - ".:/app"
+#    volumes:
+#      - .:/app:cached
+#      - bundle_volume:/bundle
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/dbname
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       REDIS_URL: redis://redis:6379/0
     env_file:
       - ./.env.production

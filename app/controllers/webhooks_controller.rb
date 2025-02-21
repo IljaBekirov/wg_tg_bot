@@ -10,7 +10,7 @@ class WebhooksController < ApplicationController
 
     if order && payload['event'] == 'payment.succeeded'
       order.update(status: 'paid')
-      TelegramBot.notify_user(order)
+      TelegramBot.new.notify_user(order)
     end
 
     render json: { message: 'OK' }, status: :ok
