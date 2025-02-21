@@ -20,11 +20,21 @@ class CallbackQueryHandler
   private
 
   def handle_tariff_selection
+    # puts 'handle_tariff_selection'
+    # puts "chat_id: #{@query.message.chat.id} message_id: #{@query.message.message_id}"
+    # puts 'handle_tariff_selection'
+
+    # Удаляем сообщение с выбором тарифа
+    # @bot.api.delete_message(chat_id: @query.message.chat.id, message_id: @query.message.message_id)
+
     tariff = Tariff.find_by(id: extract_id(@query.data))
     return send_message('Тариф не найден.') unless tariff
 
     user = User.find_by(telegram_chat_id: @query.message.chat.id)
     order = create_order(user, tariff)
+    # puts '@' * 20
+    # puts order.inspect
+    # puts '@' * 20
     payment_response = YumoneyPayment.new(order).create_payment
 
     send_payment_message(tariff, payment_response[:confirmation_url])

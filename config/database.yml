@@ -83,11 +83,11 @@ production:
     database: <%= ENV["POSTGRES_DB"] %>
     username: <%= ENV["POSTGRES_USER"] %>
     password: <%= ENV["POSTGRES_PASSWORD"] %>
-    host: wg_tg_bot-db
-  cable:
-    <<: *primary_production
-    database: wg_tg_bot_production_cable
-    migrations_paths: db/cable_migrate
+    host: db
+#  cable:
+#    <<: *primary_production
+#    database: wg_tg_bot_production_cable
+#    migrations_paths: db/cable_migrate
 
 #production:
 #  <<: *default

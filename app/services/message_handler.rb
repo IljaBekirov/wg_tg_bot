@@ -36,13 +36,19 @@ class MessageHandler
     end
     markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: buttons.each_slice(1).to_a)
 
-    @bot.api.send_message(
+    message = @bot.api.send_message(
       chat_id: @message.chat.id,
       text: build_message_text,
       reply_markup: markup,
       parse_mode: 'HTML',
       disable_web_page_preview: true
     )
+    # binding.pry
+    # puts 'send_tariffs'
+    # puts @message.message_id
+    # puts message.message_id
+    # puts 'send_tariffs'
+    # @message_id = message.message_id
   end
 
   def build_message_text
