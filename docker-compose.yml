@@ -31,8 +31,8 @@ services:
 #      RAILS_MASTER_KEY: "<your_master_key>"  # Укажи значение из config/master.key
     env_file:
       - ./.env.production
-    volumes:
-      - .:/rails
+#    volumes:
+#      - .:/rails
     depends_on:
       - db
       - redis
