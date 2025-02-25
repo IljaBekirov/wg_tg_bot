@@ -58,9 +58,9 @@ class YumoneyPayment
   end
 
   def authorization_header
-    puts '@' * 20
-    puts "#{shop_id}:#{secret_key}"
-    puts '@' * 20
+    # puts '@' * 20
+    # puts "#{shop_id}:#{secret_key}"
+    # puts '@' * 20
     "Basic #{Base64.strict_encode64("#{shop_id}:#{secret_key}")}"
   end
 
