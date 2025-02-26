@@ -39,5 +39,6 @@
 /* Контейнер для горизонтального расположения кнопок */
 .actions-container {
     display: flex;
-    gap: 10px; /* Расстояние между кнопками */
+    gap: 10px;
+    justify-content: flex-end;
 }
