@@ -1,28 +1,30 @@
-<h1>Загрузка файла</h1>
+<h1>Загрузка файлов</h1>
 
-<%= form_with model: @tariff_file, url: tariff_files_path, local: true, multipart: true do |form| %>
-  <div>
-    <%= form.label :tariff_id, 'Выберите тариф' %>
-    <%= form.collection_select :tariff_id, Tariff.all, :id, :duration, prompt: 'Выберите тариф' %>
+<%= form_with model: @tariff_file, url: tariff_files_path, local: true do |form| %>
+  <% if @tariff_file.errors.any? %>
+    <div class="alert">
+      <h2><%= pluralize(@tariff_file.errors.count, "ошибка") %> при загрузке файлов:</h2>
+      <ul>
+        <% @tariff_file.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :files, 'Файлы' %>
+    <%= form.file_field :files, multiple: true %>
   </div>
 
-  <div>
-    <%= form.label :file, 'Выберите файл' %>
-    <%= form.file_field :file %>
+  <div class="form-group">
+    <%= form.label :tariff_id, 'Тариф' %>
+    <%= form.collection_select :tariff_id, Tariff.all, :id, :duration, { prompt: 'Выберите тариф' } %>
   </div>
 
-  <div>
-    <%= form.submit 'Загрузить' %>
+  <div class="form-group">
+    <%= form.submit 'Загрузить файлы', class: 'action-button button-base' %>
   </div>
 <% end %>
 
-<% if @tariff_file.errors.any? %>
-  <div>
-    <h2>Ошибки:</h2>
-    <ul>
-      <% @tariff_file.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= link_to 'Назад к списку', tariff_files_path, class: 'sidebar-link' %>

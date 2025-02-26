@@ -1,0 +1,32 @@
+<h1>Список файлов</h1>
+
+<% if @tariff_files.any? %>
+  <table class="tariff-table">
+    <thead>
+    <tr>
+      <th>Имя файла</th>
+      <th>Тариф</th>
+      <th style="text-align: right;">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @tariff_files.each do |tariff_file| %>
+      <tr>
+        <td><%= tariff_file.file&.filename %></td>
+        <td><%= tariff_file.tariff&.duration || 'Без тарифа' %></td>
+        <td>
+          <div class="actions-container">
+            <%= button_to 'Удалить', tariff_file_path(tariff_file), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'action-button delete-button button-base' %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="empty-message">Файлов пока нет</p>
+<% end %>
+
+<div class="form-group">
+  <%= link_to 'Загрузить новые файлы', new_tariff_file_path, class: 'action-button button-base' %>
+</div>

@@ -1,0 +1,44 @@
+.wrapper {
+    display: flex;
+    min-height: calc(100vh - 60px); /* Учитываем высоту navbar */
+}
+
+.sidebar {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 15px;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #007bff;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.sidebar-link:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+.sidebar-link.active {
+    background-color: #007bff; /* Цвет фона для активной ссылки */
+    color: white; /* Белый текст для контраста */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}

@@ -1,0 +1,10 @@
+.navbar {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+}
+
+.navbar nav {
+    display: flex;
+    justify-content: flex-end; /* Кнопка "Войти"/"Выйти" справа */
+}
