@@ -19,7 +19,11 @@ services:
       - "6379:6379"
 
   bot:
-    image: ibekirov/wg_tg_bot:v1.4
+    build:
+      context: .
+      dockerfile: Dockerfile  # Укажи имя Dockerfile, если оно отличается
+    image: ibekirov/wg_tg_bot:local  # Локальный тег для отличия
+#    image: ibekirov/wg_tg_bot:v1.4
     restart: always
     platform: linux/amd64
     expose:
