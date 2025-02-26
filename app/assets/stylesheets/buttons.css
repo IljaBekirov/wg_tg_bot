@@ -1,0 +1,43 @@
+/* Общие стили для всех кнопок */
+.button-base {
+    display: inline-block;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none; /* Для button_to */
+}
+
+/* Специфические цвета для кнопок действий */
+.action-button {
+    background-color: #007bff;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+/* Кнопка удаления */
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Кнопки логина/логаута */
+.login-button, .logout-button {
+    background-color: #007bff;
+}
+
+.login-button:hover, .logout-button:hover {
+    background-color: #0056b3;
+}
+
+/* Контейнер для горизонтального расположения кнопок */
+.actions-container {
+    display: flex;
+    gap: 10px; /* Расстояние между кнопками */
+}

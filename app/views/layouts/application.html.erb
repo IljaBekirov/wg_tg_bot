@@ -11,6 +11,16 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+        <% if logged_in? %>
+          <%= button_to "Выйти", logout_path, method: :delete, class: "logout-button button-base" %>
+        <% else %>
+          <%= link_to "Войти", login_path, class: "login-button button-base" %>
+        <% end %>
+      </nav>
+    </header>
+
     <% if flash[:alert] %>
       <p style="color: red;"><%= flash[:alert] %></p>
     <% elsif flash[:notice] %>

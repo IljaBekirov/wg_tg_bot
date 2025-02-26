@@ -1,0 +1,21 @@
+.tariff-table {
+    width: 100%;
+    max-width: 80%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.tariff-table th, .tariff-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tariff-table th {
+    background-color: #f5f5f5;
+}
+
+.empty-message {
+    color: #666;
+    font-style: italic;
+}

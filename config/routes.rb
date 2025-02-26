@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   # root "posts#index"
   post 'webhooks/yumoney', to: 'webhooks#yumoney'
 
-  resources :tariff_files, only: %i[new create]
-  resources :tariffs, only: %i[index new create]
+  resources :tariff_files, only: %i[new index create]
+  resources :tariffs, only: %i[index new create edit update destroy]
+
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
+  root 'tariffs#index'
 end
