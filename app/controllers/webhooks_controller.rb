@@ -5,6 +5,9 @@ class WebhooksController < ApplicationController
 
   def yumoney
     payload = JSON.parse(request.body.read)
+    puts '@' * 20
+    puts payload.inspect
+    puts '@' * 20
 
     order = Order.find_by(id: payload['object']['metadata']['order_id'])
 

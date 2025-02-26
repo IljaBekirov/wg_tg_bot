@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     image: postgres:17.0
@@ -32,6 +31,8 @@ services:
 #      RAILS_MASTER_KEY: "<your_master_key>"  # Укажи значение из config/master.key
     env_file:
       - ./.env.production
+#    volumes:
+#      - .:/rails
     depends_on:
       - db
       - redis
@@ -54,7 +55,8 @@ services:
     volumes:
       - certbot-data:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ilja.bekirov@gmail.com --agree-tos --no-eff-email -d wgbot.ru -d www.wgbot.ru
+#    command: certonly --webroot --webroot-path=/var/www/certbot --email ilja.bekirov@gmail.com --agree-tos --no-eff-email -d wgbot.ru -d www.wgbot.ru
+    command: certonly --manual --preferred-challenges dns --email ilja.bekirov@gmail.com --agree-tos --no-eff-email -d wgbot.ru -d www.wgbot.ru
     depends_on:
       - nginx
 

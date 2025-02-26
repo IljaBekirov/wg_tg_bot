@@ -4,13 +4,13 @@ require 'telegram/bot'
 
 class TelegramBot
   def initialize
-    puts 'Инициализация бота'
-    puts "Токен: #{ENV['TELEGRAM_BOT_TOKEN']}"
-    puts "secret_key_base: #{Rails.application.secrets.secret_key_base}"
+    # puts 'Инициализация бота'
+    # puts "Токен: #{ENV['TELEGRAM_BOT_TOKEN']}"
+    # puts "secret_key_base: #{Rails.application.secrets.secret_key_base}"
     # puts "secret_key_base: #{ENV['SECRET_KEY_BASE']}"
     @bot = Telegram::Bot::Client.new(ENV['TELEGRAM_BOT_TOKEN'])
-    puts 'Бот инициализирован'
-    puts @bot.inspect
+    # puts 'Бот инициализирован'
+    # puts @bot.inspect
   end
 
   def start
