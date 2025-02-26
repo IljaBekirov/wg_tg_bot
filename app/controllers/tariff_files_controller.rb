@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TariffFilesController < ApplicationController
+  before_action :require_admin
+
   def index
     render json: TariffFile.all
   end

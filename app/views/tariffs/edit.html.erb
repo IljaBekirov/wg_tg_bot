@@ -1,9 +1,9 @@
-<h1>Создание тарифа</h1>
+<h1>Редактирование тарифа</h1>
 
-<%= form_with model: @tariff, url: tariffs_path, local: true do |form| %>
+<%= form_with model: @tariff, url: tariff_path(@tariff), local: true do |form| %>
   <% if @tariff.errors.any? %>
     <div style="color: red;">
-      <h2><%= pluralize(@tariff.errors.count, "ошибка") %> при создании тарифа:</h2>
+      <h2><%= pluralize(@tariff.errors.count, "ошибка") %> при обновлении тарифа:</h2>
       <ul>
         <% @tariff.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -28,7 +28,7 @@
   </div>
 
   <div class="form-group">
-    <%= form.submit 'Создать тариф' %>
+    <%= form.submit 'Обновить тариф' %>
   </div>
 <% end %>
 
