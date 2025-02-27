@@ -17,13 +17,7 @@
       <tr>
         <td><%= user.id %></td>
         <td><%= user.telegram_chat_id || 'Не указан' %></td>
-        <td>
-          <% if user.username.present? %>
-            <%= link_to "@#{user.username}", "https://t.me/#{user.username}", target: '_blank', class: 'telegram-link' %>
-          <% else %>
-            Не указан
-          <% end %>
-        </td>
+        <td><%= telegram_username_link(user) %></td>
         <td><%= user.first_name || 'Не указан' %></td>
         <td><%= user.last_name || 'Не указан' %></td>
         <td>

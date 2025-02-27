@@ -18,7 +18,7 @@
     <% @orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
-        <td><%= order.user_id || 'Без пользователя' %></td>
+        <td><%= telegram_username_link(order.user) %></td>
         <td><%= order.status || 'Не указан' %></td>
         <td><%= order.telegram_user_id || 'Не указан' %></td>
         <td><%= order.tariff&.duration || 'Без тарифа' %></td>

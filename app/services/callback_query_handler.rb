@@ -36,7 +36,7 @@ class CallbackQueryHandler
     # puts order.inspect
     # puts '@' * 20
     payment_response = YumoneyPayment.new(order).create_payment
-
+    order.update(payment_id: payment_response[:payment_id])
     send_payment_message(tariff, payment_response[:confirmation_url])
   end
 
