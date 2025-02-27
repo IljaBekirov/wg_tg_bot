@@ -22,16 +22,7 @@
 
 <div class="wrapper">
   <% if logged_in? %>
-    <aside class="sidebar">
-      <nav class="sidebar-nav">
-        <ul>
-          <li><%= link_to "Пользователи", users_path, class: "sidebar-link #{current_page?('#') ? 'active' : ''}" %></li>
-          <li><%= link_to "Заказы", "#", class: "sidebar-link #{current_page?('#') ? 'active' : ''}" %></li>
-          <li><%= link_to "Тарифы", tariffs_path, class: "sidebar-link #{current_page?(tariffs_path) ? 'active' : ''}" %></li>
-          <li><%= link_to "Файлы", tariff_files_path, class: "sidebar-link #{current_page?(tariff_files_path) ? 'active' : ''}" %></li>
-        </ul>
-      </nav>
-    </aside>
+    <%= sidebar_navigation %>
   <% end %>
 
   <main class="content">

@@ -1,0 +1,38 @@
+<h1>Пользователь #<%= @user.id %></h1>
+
+<table class="tariff-table">
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <td><%= @user.id %></td>
+  </tr>
+  <tr>
+    <th>Telegram Chat ID</th>
+    <td><%= @user.telegram_chat_id || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Username</th>
+    <td><%= @user.username || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Имя</th>
+    <td><%= @user.first_name || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Фамилия</th>
+    <td><%= @user.last_name || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Создан</th>
+    <td><%= @user.created_at.strftime('%d.%m.%Y %H:%M') %></td>
+  </tr>
+  <tr>
+    <th>Обновлен</th>
+    <td><%= @user.updated_at.strftime('%d.%m.%Y %H:%M') %></td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="form-group">
+  <%= link_to 'Назад к списку', users_path, class: 'action-button button-base' %>
+</div>

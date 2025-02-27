@@ -1,0 +1,40 @@
+<h1>Список пользователей</h1>
+
+<% if @users.any? %>
+  <table class="tariff-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Telegram Chat ID</th>
+      <th>Username</th>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.telegram_chat_id || 'Не указан' %></td>
+        <td>
+          <% if user.username.present? %>
+            <%= link_to "@#{user.username}", "https://t.me/#{user.username}", target: '_blank', class: 'telegram-link' %>
+          <% else %>
+            Не указан
+          <% end %>
+        </td>
+        <td><%= user.first_name || 'Не указан' %></td>
+        <td><%= user.last_name || 'Не указан' %></td>
+        <td>
+          <div class="actions-container">
+            <%= link_to 'Просмотреть', user_path(user), class: 'action-button button-base' %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="empty-message">Пользователей пока нет</p>
+<% end %>

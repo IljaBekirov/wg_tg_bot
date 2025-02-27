@@ -1,0 +1,46 @@
+<h1>Заказ #<%= @order.id %></h1>
+
+<table class="tariff-table">
+  <tbody>
+  <tr>
+    <th>ID</th>
+    <td><%= @order.id %></td>
+  </tr>
+  <tr>
+    <th>Пользователь</th>
+    <td><%= @order.user_id || 'Без пользователя' %></td>
+  </tr>
+  <tr>
+    <th>Статус</th>
+    <td><%= @order.status || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Telegram ID</th>
+    <td><%= @order.telegram_user_id || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Тариф</th>
+    <td><%= @order.tariff&.duration || 'Без тарифа' %></td>
+  </tr>
+  <tr>
+    <th>Сумма</th>
+    <td><%= @order.amount || 'Не указана' %></td>
+  </tr>
+  <tr>
+    <th>Платеж ID</th>
+    <td><%= @order.payment_id || 'Не указан' %></td>
+  </tr>
+  <tr>
+    <th>Создан</th>
+    <td><%= @order.created_at.strftime('%d.%m.%Y %H:%M') %></td>
+  </tr>
+  <tr>
+    <th>Обновлен</th>
+    <td><%= @order.updated_at.strftime('%d.%m.%Y %H:%M') %></td>
+  </tr>
+  </tbody>
+</table>
+
+<div class="form-group">
+  <%= link_to 'Назад к списку', orders_path, class: 'action-button button-base' %>
+</div>

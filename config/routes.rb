@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   resources :tariff_files, only: %i[new index create destroy]
   resources :tariffs, only: %i[index new create edit update destroy]
-  resources :users
+  resources :users, only: %i[index show]
+  resources :orders, only: %i[index show]
 
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
