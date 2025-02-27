@@ -27,6 +27,10 @@
     <% end %>
     </tbody>
   </table>
+
+  <div class="pagination">
+    <%= will_paginate @tariff_files %>
+  </div>
 <% else %>
   <p class="empty-message">Файлов пока нет</p>
 <% end %>

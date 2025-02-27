@@ -33,3 +33,58 @@
     background-color: #f8d7da;
     text-align: center;
 }
+
+.telegram-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.telegram-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.payment-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.payment-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a, .pagination span {
+    padding: 5px 10px;
+    margin: 0 2px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+.pagination .current {
+    padding: 5px 10px;
+    margin: 0 2px;
+    text-decoration: none;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .disabled {
+    color: #666;
+    border-color: #ddd;
+    cursor: not-allowed;
+}

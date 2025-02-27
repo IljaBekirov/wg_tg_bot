@@ -52,6 +52,7 @@ gem 'net-pop', require: false
 gem 'rubocop-rails'
 gem 'telegram-bot-ruby'
 gem 'thruster', require: false
+gem 'will_paginate', '~> 4.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

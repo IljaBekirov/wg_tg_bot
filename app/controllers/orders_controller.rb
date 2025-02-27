@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: :show
 
   def index
-    @orders = Order.all
+    @orders = Order.all.paginate(page: params[:page], per_page: 10)
   end
 
   def show; end

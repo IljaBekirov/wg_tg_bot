@@ -5,7 +5,7 @@ class TariffFilesController < ApplicationController
   before_action :set_tariff_file, only: [:destroy]
 
   def index
-    @tariff_files = TariffFile.all
+    @tariff_files = TariffFile.all.paginate(page: params[:page], per_page: 10)
   end
 
   def new
