@@ -13,16 +13,13 @@ class TariffFilesController < ApplicationController
   end
 
   def create
-    if tariff_file_params[:files].present? && tariff_file_params[:tariff_id].present?
-      tariff_file_params[:files].each do |file|
-        @tariff_file = TariffFile.new(file: file, tariff_id: tariff_file_params[:tariff_id])
-        unless @tariff_file.save
-          render :new, status: :unprocessable_entity and return
-        end
-      end
+    result = TariffFiles::BulkUploadService.call(tariff_file_params)
+
+    if result.success?
       redirect_to tariff_files_path, notice: 'Файлы успешно загружены.'
     else
-      @tariff_file = TariffFile.new(tariff_file_params)
+      @tariff_file = result.tariff_file || TariffFile.new(tariff_file_params)
+      flash.now[:alert] = result.error_message
       render :new, status: :unprocessable_entity
     end
   end

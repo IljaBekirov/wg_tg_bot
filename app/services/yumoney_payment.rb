@@ -13,9 +13,6 @@ class YumoneyPayment
 
   def create_payment
     response = Faraday.post(YUMONEY_API_URL, payment_data.to_json, headers)
-    # puts '@' * 20
-    # puts response.body
-    # puts '@' * 20
     handle_response(JSON.parse(response.body))
   end
 
@@ -58,9 +55,6 @@ class YumoneyPayment
   end
 
   def authorization_header
-    # puts '@' * 20
-    # puts "#{shop_id}:#{secret_key}"
-    # puts '@' * 20
     "Basic #{Base64.strict_encode64("#{shop_id}:#{secret_key}")}"
   end
 

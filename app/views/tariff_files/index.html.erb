@@ -6,6 +6,7 @@
     <tr>
       <th>Имя файла</th>
       <th>Тариф</th>
+      <th>Отправлен</th>
       <th style="text-align: right;">Действия</th>
     </tr>
     </thead>
@@ -14,6 +15,9 @@
       <tr>
         <td><%= tariff_file.file&.filename %></td>
         <td><%= tariff_file.tariff&.duration || 'Без тарифа' %></td>
+        <td class="<%= tariff_file.sent? ? 'sent-yes' : 'sent-no' %>">
+          <%= tariff_file.sent? ? 'Да' : 'Нет' %>
+        </td>
         <td>
           <div class="actions-container">
             <%= button_to 'Удалить', tariff_file_path(tariff_file), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'action-button delete-button button-base' %>

@@ -23,3 +23,13 @@
     color: #666;
     font-style: italic;
 }
+
+.sent-yes {
+    background-color: #d4edda;
+    text-align: center;
+}
+
+.sent-no {
+    background-color: #f8d7da;
+    text-align: center;
+}
