@@ -68,7 +68,7 @@ class CallbackQueryHandler
     Order.create(
       telegram_user_id: @query.message.chat.id,
       user_id: user.id,
-      tariff:,
+      tariff: tariff,
       amount: tariff.price,
       status: 'pending'
     )
