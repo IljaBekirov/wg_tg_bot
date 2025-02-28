@@ -14,7 +14,6 @@ module TariffFiles
     end
 
     def call
-      return missing_params_result unless valid_input?
       return empty_files_result if filtered_files.empty?
 
       process_files(filtered_files)
@@ -22,20 +21,8 @@ module TariffFiles
 
     private
 
-    def valid_input?
-      @params[:files].present? && @params[:tariff_id].present?
-    end
-
     def filtered_files
       @params[:files].reject { |f| f.blank? || f == '' }
-    end
-
-    def missing_params_result
-      Result.new(
-        success?: false,
-        tariff_file: @tariff_file,
-        error_message: 'Пожалуйста, выберите файлы и тариф.'
-      )
     end
 
     def empty_files_result

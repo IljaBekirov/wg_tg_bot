@@ -34,7 +34,7 @@ class TelegramBot
   end
 
   def notify_user(order)
-    tariff_file = order.tariff.tariff_files.find_by(sent: false)
+    tariff_file = order.tariff_file
 
     return send_message(order.telegram_user_id, 'Файл не найден.') unless tariff_file&.file&.attached?
 
@@ -43,7 +43,7 @@ class TelegramBot
 
     response = send_document(order.telegram_user_id, file, tariff_file.file.filename.to_s)
 
-    tariff_file.update(sent: true) if response
+    tariff_file.update(sent: true, tariff: order.tariff) if response
   end
 
   private
@@ -55,7 +55,8 @@ class TelegramBot
   def send_document(chat_id, file, filename)
     @bot.api.send_document(
       chat_id: chat_id,
-      document: Faraday::UploadIO.new(file, 'text/plain', filename)
+      document: Faraday::UploadIO.new(file, 'text/plain', filename),
+      caption: 'Ваш файл успешно отправлен. Спасибо за оплату!'
     )
   rescue StandardError => e
     Rails.logger.error("Ошибка отправки файла в Telegram: #{e.message}")

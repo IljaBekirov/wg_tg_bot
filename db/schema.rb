@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_26_195535) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_27_202221) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,15 +58,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_195535) do
     t.string "payment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tariff_file_id"
+    t.index ["tariff_file_id"], name: "index_orders_on_tariff_file_id"
     t.index ["tariff_id"], name: "index_orders_on_tariff_id"
   end
 
   create_table "tariff_files", force: :cascade do |t|
     t.text "content"
     t.boolean "sent", default: false
-    t.bigint "tariff_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "tariff_id"
+    t.datetime "send_at"
     t.index ["tariff_id"], name: "index_tariff_files_on_tariff_id"
   end
 
@@ -89,6 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_26_195535) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "orders", "tariff_files"
   add_foreign_key "orders", "tariffs"
   add_foreign_key "tariff_files", "tariffs"
 end

@@ -12,7 +12,8 @@ class WebhooksController < ApplicationController
     order = Order.find_by(id: payload['object']['metadata']['order_id'])
 
     if order && payload['event'] == 'payment.succeeded'
-      order.update!(status: 'paid')
+      tariff_file = TariffFile.find_by(sent: false)
+      order.update!(status: 'paid', tariff_file: tariff_file)
       TelegramBot.new.notify_user(order)
     end
 
