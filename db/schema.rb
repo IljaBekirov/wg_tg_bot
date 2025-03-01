@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_27_202221) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_01_171813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_27_202221) do
     t.datetime "updated_at", null: false
     t.bigint "tariff_id"
     t.datetime "send_at"
+    t.string "name"
+    t.string "wg_uuid"
+    t.datetime "expired_at"
     t.index ["tariff_id"], name: "index_tariff_files_on_tariff_id"
   end
 

@@ -47,8 +47,13 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'faraday'
+gem 'faraday-net_http'
+gem 'httparty'
 gem 'kamal', '~> 2.5'
 gem 'net-pop', require: false
+gem 'redis'
+gem 'redis-rails'
 gem 'rubocop-rails'
 gem 'telegram-bot-ruby'
 gem 'thruster', require: false

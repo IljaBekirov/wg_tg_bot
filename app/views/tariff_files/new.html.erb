@@ -1,30 +1,16 @@
-<h1>Загрузка файлов</h1>
-
+<h1>Создать новый конфиг</h1>
 <%= form_with model: @tariff_file, url: tariff_files_path, local: true do |form| %>
-  <% if @tariff_file.errors.any? %>
-    <div class="alert">
-      <h2><%= pluralize(@tariff_file.errors.count, "ошибка") %> при загрузке файлов:</h2>
-      <ul>
-        <% @tariff_file.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="form-group">
-    <%= form.label :files, 'Файлы' %>
-    <%= form.file_field :files, multiple: true %>
+    <%= form.label :name, "Имя конфига" %>
+    <%= form.text_field :name %>
   </div>
 
   <div class="form-group">
-    <%= form.label :tariff_id, 'Тариф' %>
-    <%= form.collection_select :tariff_id, Tariff.all, :id, :duration, { prompt: 'Выберите тариф' } %>
+    <%= form.label :quantity, "Количество" %>
+    <%= form.number_field :quantity %>
   </div>
 
   <div class="form-group">
-    <%= form.submit 'Загрузить файлы', class: 'action-button button-base' %>
+    <%= form.submit "Создать" %>
   </div>
 <% end %>
-
-<%= link_to 'Назад к списку', tariff_files_path, class: 'sidebar-link' %>

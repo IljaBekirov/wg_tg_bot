@@ -3,10 +3,11 @@
 class TariffFilesController < ApplicationController
   before_action :require_admin
   before_action :set_tariff_file, only: [:destroy]
+  before_action :set_server_service, only: %i[create destroy]
 
   def index
     @tariff_files = TariffFile.all.order(:id)
-                      .paginate(page: params[:page], per_page: 10)
+      .paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -14,20 +15,27 @@ class TariffFilesController < ApplicationController
   end
 
   def create
-    result = TariffFiles::BulkUploadService.call(tariff_file_params)
+    creator = TariffFileCreator.new(@server_service, config_params)
+    result = creator.create_configs
 
     if result.success?
-      redirect_to tariff_files_path, notice: 'Файлы успешно загружены.'
+      redirect_to tariff_files_path, notice: "Создано #{result.created_count} конфига(ов)"
     else
-      @tariff_file = result.tariff_file || TariffFile.new(tariff_file_params)
-      flash.now[:alert] = result.error_message
-      render :new, status: :unprocessable_entity
+      Rails.logger.error("Ошибки при создании конфига(ов): #{result.errors.join(', ')}")
+      redirect_to tariff_files_path,
+        alert: "Создано #{result.created_count} конфига(ов), ошибки: #{result.errors.join(', ')}"
     end
   end
 
   def destroy
-    @tariff_file.destroy
-    redirect_to tariff_files_path, notice: 'Файл успешно удален.'
+    response = @server_service.remove_client(@tariff_file.wg_uuid)
+    if response.success?
+      @tariff_file.destroy!
+      redirect_to tariff_files_path, notice: 'Конфиг успешно удален'
+    else
+      Rails.logger.error("Не удалось удалить конфиг на wg-easy: #{@tariff_file.wg_uuid}")
+      redirect_to tariff_files_path, alert: 'Не удалось удалить конфиг на wg-easy'
+    end
   end
 
   private
@@ -36,7 +44,12 @@ class TariffFilesController < ApplicationController
     @tariff_file = TariffFile.find(params[:id])
   end
 
-  def tariff_file_params
-    params.require(:tariff_file).permit(:tariff_id, files: [])
+  def set_server_service
+    @server_service = WireguardService.new(ENV['SERVICE_URL'], ENV['SERVICE_PASSWORD'])
+    @server_service.login unless @server_service.logged_in?
+  end
+
+  def config_params
+    params.require(:tariff_file).permit(:name, :quantity)
   end
 end
