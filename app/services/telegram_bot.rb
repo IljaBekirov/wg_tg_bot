@@ -41,9 +41,7 @@ class TelegramBot
     file_data = tariff_file.file.download
     file = StringIO.new(file_data)
 
-    response = send_document(order.telegram_user_id, file, tariff_file.file.filename.to_s)
-
-    tariff_file.update(sent: true, tariff: order.tariff) if response
+    send_document(order.telegram_user_id, file, tariff_file.file.filename.to_s)
   end
 
   private

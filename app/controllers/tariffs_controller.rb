@@ -5,7 +5,7 @@ class TariffsController < ApplicationController
   before_action :set_tariff, only: %i[edit update destroy]
 
   def index
-    @tariffs = Tariff.all
+    @tariffs = Tariff.all.order(:id)
   end
 
   def new

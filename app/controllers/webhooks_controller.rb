@@ -2,21 +2,30 @@
 
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :set_server_service
 
   def yumoney
-    payload = JSON.parse(request.body.read)
-    puts '@' * 20
-    puts payload.inspect
-    puts '@' * 20
+    payload = parse_payload(request.body.read)
+    return render_error('Invalid payload') unless payload
 
-    order = Order.find_by(id: payload['object']['metadata']['order_id'])
+    Rails.logger.debug { "\n#{'@' * 20}\n#{payload.inspect}\n#{'@' * 20}" }
+    PaymentProcessor.new(payload, @server_service).process
+    render_success
+  end
 
-    if order && payload['event'] == 'payment.succeeded'
-      tariff_file = TariffFile.find_by(sent: false)
-      order.update!(status: 'paid', tariff_file: tariff_file)
-      TelegramBot.new.notify_user(order)
-    end
+  private
 
+  def parse_payload(body)
+    JSON.parse(body)
+  rescue JSON::ParserError
+    nil
+  end
+
+  def render_success
     render json: { message: 'OK' }, status: :ok
+  end
+
+  def render_error(message)
+    render json: { message: message }, status: :bad_request
   end
 end

@@ -44,11 +44,6 @@ class TariffFilesController < ApplicationController
     @tariff_file = TariffFile.find(params[:id])
   end
 
-  def set_server_service
-    @server_service = WireguardService.new(ENV['SERVICE_URL'], ENV['SERVICE_PASSWORD'])
-    @server_service.login unless @server_service.logged_in?
-  end
-
   def config_params
     params.require(:tariff_file).permit(:name, :quantity)
   end
