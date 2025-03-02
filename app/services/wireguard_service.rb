@@ -69,6 +69,10 @@ class WireguardService
     put_request("/wireguard/client/#{uid}/name", body: { name: name })
   end
 
+  def update_expired_at(uid, expired_at)
+    put_request("/wireguard/client/#{uid}/expireDate", body: { expireDate: expired_at })
+  end
+
   def enable_client(uid)
     post_request("/wireguard/client/#{uid}/enable")
   end
