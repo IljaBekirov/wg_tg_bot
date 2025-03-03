@@ -10,7 +10,6 @@ class MessageHandler
     find_or_create_user
     case @message.text
     when '/start'
-      send_tariffs(user)
       send_tariffs
     when '/keys'
       check_keys
