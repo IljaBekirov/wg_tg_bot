@@ -50,7 +50,6 @@ class MessageHandler
     end
   end
 
-  def send_tariffs(user)
   def send_tariffs
     buttons = Tariff.all.order(:duration).map do |tariff|
       Telegram::Bot::Types::InlineKeyboardButton.new(
