@@ -6,7 +6,6 @@
       <tr>
         <th>Имя файла</th>
         <th>Тариф</th>
-        <th>Отправлен</th>
         <th>Дата отправки</th>
         <th>Пользователь</th>
         <th>Срок действия</th>
@@ -19,11 +18,10 @@
           <td><%= tariff_file.file&.filename %></td>
           <td><%= tariff_file.tariff&.duration || 'Без тарифа' %></td>
           <td class="<%= tariff_file.sent? ? 'sent-yes' : 'sent-no' %>">
-            <%= tariff_file.sent? ? 'Да' : 'Нет' %>
+            <%= tariff_file.send_at&.strftime("%d %B %Y %H:%M") || 'Не отправлен' %>
           </td>
-          <td><%= tariff_file.send_at&.strftime("%d %B %Y %H:%M") || 'Не отправлен' %></td>
-          <td><%= tariff_file.order&.user&.username %></td>
-          <td><%= tariff_file.expired_at&.strftime("%d %B %Y %H:%M") || 'Бессрочно' %></td>
+          <td><%= tariff_file.user&.username %></td>
+          <td><%= TariffFiles::Presenter.new(tariff_file).build_text_key %></td>
           <td>
             <div class="actions-container">
               <%= button_to 'Удалить', tariff_file_path(tariff_file), method: :delete, data: { turbo_confirm: 'Вы уверены?' }, class: 'action-button delete-button button-base' %>

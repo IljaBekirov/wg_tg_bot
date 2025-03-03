@@ -7,17 +7,40 @@ class MessageHandler
   end
 
   def handle
-    user = find_or_create_user
-
+    find_or_create_user
     case @message.text
     when '/start'
       send_tariffs(user)
+      send_tariffs
+    when '/keys'
+      check_keys
     else
       @bot.api.send_message(chat_id: @message.chat.id, text: 'Неизвестная команда.')
     end
   end
 
   private
+
+  def check_keys
+    tariff_files = User.find_by(telegram_chat_id: @message.from.id).tariff_files
+
+
+    buttons = tariff_files.map do |tariff_file|
+      Telegram::Bot::Types::InlineKeyboardButton.new(
+        text: TariffFiles::Presenter.new(tariff_file).build_text_key,
+        callback_data: "tfile_#{tariff_file.id}"
+      )
+    end
+    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: buttons.each_slice(1).to_a)
+
+    @bot.api.send_message(
+      chat_id: @message.chat.id,
+      text: 'Ваши ключи',
+      reply_markup: markup,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true
+    )
+  end
 
   def find_or_create_user
     User.find_or_create_by(telegram_chat_id: @message.chat.id) do |u|
@@ -28,6 +51,7 @@ class MessageHandler
   end
 
   def send_tariffs(user)
+  def send_tariffs
     buttons = Tariff.all.order(:duration).map do |tariff|
       Telegram::Bot::Types::InlineKeyboardButton.new(
         text: build_tariff_message_text(tariff),
@@ -36,19 +60,13 @@ class MessageHandler
     end
     markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: buttons.each_slice(1).to_a)
 
-    message = @bot.api.send_message(
+    @bot.api.send_message(
       chat_id: @message.chat.id,
       text: build_message_text,
       reply_markup: markup,
       parse_mode: 'HTML',
       disable_web_page_preview: true
     )
-    # binding.pry
-    # puts 'send_tariffs'
-    # puts @message.message_id
-    # puts message.message_id
-    # puts 'send_tariffs'
-    # @message_id = message.message_id
   end
 
   def build_message_text

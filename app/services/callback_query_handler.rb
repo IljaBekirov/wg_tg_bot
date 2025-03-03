@@ -9,6 +9,7 @@ class CallbackQueryHandler
   def handle
     case @query.data
     when /^tariff_/ then handle_tariff_selection
+    when /^tfile_/ then handle_tfile
     # when /^confirm_/ then handle_payment_confirmation
     # when /^check_payment_/ then handle_payment_check
     else send_message('Неизвестный выбор.')
@@ -20,49 +21,21 @@ class CallbackQueryHandler
   private
 
   def handle_tariff_selection
-    # puts 'handle_tariff_selection'
-    # puts "chat_id: #{@query.message.chat.id} message_id: #{@query.message.message_id}"
-    # puts 'handle_tariff_selection'
-
-    # Удаляем сообщение с выбором тарифа
-    # @bot.api.delete_message(chat_id: @query.message.chat.id, message_id: @query.message.message_id)
-
     tariff = Tariff.find_by(id: extract_id(@query.data))
     return send_message('Тариф не найден.') unless tariff
 
     user = User.find_by(telegram_chat_id: @query.message.chat.id)
     order = create_order(user, tariff)
-    # puts '@' * 20
-    # puts order.inspect
-    # puts '@' * 20
     payment_response = YumoneyPayment.new(order).create_payment
     order.update(payment_id: payment_response[:payment_id])
     send_payment_message(tariff, payment_response[:confirmation_url])
   end
 
-  # def handle_payment_check
-  #   order = Order.find_by(id: extract_id(@query.data))
-  #   return send_message('Заказ не найден.') unless order
-  #
-  #   process_payment_check(order)
-  # end
+  def handle_tfile
+    tariff_file = TariffFile.find(extract_id(@query.data))
 
-  # def process_payment_check(order)
-  #   payment_status = YumoneyPayment.new(order).check_payment_status
-  #
-  #   if payment_status == 'succeeded'
-  #     handle_successful_payment(order)
-  #   else
-  #     send_message('Оплата еще не завершена или произошла ошибка. Попробуйте снова позже.')
-  #   end
-  # end
-
-  # def handle_successful_payment(order)
-  #   order.update(status: 'paid')
-  #   file = order.tariff.tariff_files.find_by(sent: false)
-  #
-  #   file ? send_document(file) : send_message('Файлы для этого тарифа закончились. Свяжитесь с поддержкой.')
-  # end
+    send_message("Тариф файл найден: #{tariff_file.wg_uuid}")
+  end
 
   def create_order(user, tariff)
     Order.create(
@@ -85,15 +58,6 @@ class CallbackQueryHandler
       ]
     )
     send_message(build_message_text(tariff), markup)
-  end
-
-  def send_document(file)
-    @bot.api.send_document(
-      chat_id: @query.message.chat.id,
-      document: Faraday::UploadIO.new(file.path, 'text/plain'),
-      caption: 'Ваш файл успешно отправлен. Спасибо за оплату!'
-    )
-    file.update(sent: true)
   end
 
   def send_message(text, markup = nil)

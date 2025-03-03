@@ -59,7 +59,10 @@ class TariffFileCreator
   end
 
   def create_single_config_with_data(name, client_data)
-    attrs = { name: name, wg_uuid: client_data['id'], expired_at: client_data['expiredAt'] }
+    attrs = { ame: name,
+              wg_uuid: client_data['id'],
+              expired_at: client_data['expiredAt'],
+              enabled: client_data['enabled'] }
     tariff_file = TariffFile.new(attrs)
     config_file = @server_service.configuration(tariff_file.wg_uuid)
     tariff_file.file.attach(io: StringIO.new(config_file), filename: "#{name}.conf")

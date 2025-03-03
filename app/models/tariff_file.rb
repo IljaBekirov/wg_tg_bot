@@ -3,6 +3,7 @@
 class TariffFile < ApplicationRecord
   has_one :order
   belongs_to :tariff, optional: true
+  belongs_to :user, optional: true
   has_one_attached :file
 
   scope :unsent, -> { where(sent: false) }

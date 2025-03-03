@@ -9,8 +9,20 @@ class TelegramBot
     # puts "secret_key_base: #{Rails.application.secrets.secret_key_base}"
     # puts "secret_key_base: #{ENV['SECRET_KEY_BASE']}"
     @bot = Telegram::Bot::Client.new(ENV['TELEGRAM_BOT_TOKEN'])
+    set_bot_commands
     puts 'Бот инициализирован'
     # puts @bot.inspect
+  end
+
+  def set_bot_commands
+    commands = [
+      { command: 'start', description: 'Запустить бота' },
+      { command: 'keys', description: 'Мои ключи' },
+      { command: 'pay', description: 'Заросить на вывод' }
+    ]
+    @bot.api.set_my_commands(commands: commands)
+  rescue StandardError => e
+    Rails.logger.error("Ошибка установки команд бота: #{e.message}")
   end
 
   def start
