@@ -37,6 +37,7 @@ class PaymentProcessor
       tariff_file.update!(
         sent: true,
         tariff: order.tariff,
+        user: order.user,
         expired_at: expired_at
       )
     end
