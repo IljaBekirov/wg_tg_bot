@@ -35,8 +35,8 @@ services:
 #      RAILS_MASTER_KEY: "<your_master_key>"  # Укажи значение из config/master.key
     env_file:
       - ./.env.production
-#    volumes:
-#      - .:/rails
+    volumes:
+      - storage-data:/app/storage  # Добавляем том для Active Storage
     depends_on:
       - db
       - redis
@@ -67,3 +67,4 @@ services:
 volumes:
   pgdata:  # Том для данных PostgreSQL
   certbot-data:  # Том для сертификатов Let's Encrypt
+  storage-data:    # Новый том для Active Storage
