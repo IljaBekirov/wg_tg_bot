@@ -59,7 +59,7 @@ class TariffFileCreator
   end
 
   def create_single_config_with_data(name, client_data)
-    attrs = { ame: name,
+    attrs = { name: name,
               wg_uuid: client_data['id'],
               expired_at: client_data['expiredAt'],
               enabled: client_data['enabled'] }
